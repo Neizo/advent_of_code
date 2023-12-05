@@ -1,12 +1,14 @@
 use std::fs::read_to_string;
+use std::io;
 
-pub fn day1_main() {
-    let file_path = "./inputs/aoc_2023/day1/inputs.txt";
+const FILE_PATH: &str = "./inputs/aoc_2023/day1/inputs_step1.txt";
+
+pub fn day1_main() -> io::Result<u32>{
     let mut sum = 0;
 
-    for line in read_to_string(file_path).unwrap().lines() {
+    for line in read_to_string(FILE_PATH)?.lines() {
         let mut line_value = 0;
-        let mut line_numbers = enigne1(line);
+        let mut line_numbers = enigme1(line);
 
         if line_numbers.len() == 1 {line_numbers.push(line_numbers[0]);}
 
@@ -17,19 +19,9 @@ pub fn day1_main() {
         sum += line_value;
     }
 
-    println!("The answer for step 1 of day 1 is {}", sum);
+    Ok(sum)
 }
 
-pub fn enigne1(_line:&str) -> Vec<u32>{
-    let mut line_numbers = vec![];
-
-    for char in _line.chars() {
-        let digit = char.to_digit(10);
-        match digit {
-            Some(data) => line_numbers.push(data),
-            _ => {}
-        }
-    }
-
-    line_numbers
+pub fn enigme1(_line:&str) -> Vec<u32>{
+    _line.chars().filter_map(|char| char.to_digit(10)).collect()
 }
