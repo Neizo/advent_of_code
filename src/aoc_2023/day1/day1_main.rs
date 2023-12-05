@@ -13,7 +13,7 @@ pub fn day1_main() -> io::Result<u32>{
         if line_numbers.len() == 1 {line_numbers.push(line_numbers[0]);}
 
         if line_numbers.len() >= 2 {
-            line_value = &line_numbers[0] * 10 + &line_numbers[line_numbers.len()-1];
+            line_value = line_numbers.first().unwrap() * 10 + line_numbers.last().unwrap();
         }
 
         sum += line_value;
