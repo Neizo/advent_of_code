@@ -17,7 +17,8 @@ struct Cubes {
 }
 
 pub fn day2_main() -> io::Result<u32> {
-    let mut sum = 0;
+    let mut sum_step1 = 0;
+    let mut sum_step2 = 0;
     let game_constitution = Cubes{red: 12, green: 13, blue: 14};
 
     for line in read_to_string(FILE_PATH)?.lines() {
@@ -27,11 +28,15 @@ pub fn day2_main() -> io::Result<u32> {
             .iter().filter(|value | **value == false).map(|value| *value).collect();
 
         if bag_not_possible.is_empty() {
-            sum += line_content.game_id;
+            sum_step1 += line_content.game_id;
         }
+
+        sum_step2 += line_content.cubes.iter().map(|cube| cube.red).max().unwrap() *
+                           line_content.cubes.iter().map(|cube| cube.green).max().unwrap() *
+                           line_content.cubes.iter().map(|cube| cube.blue).max().unwrap()
     }
 
-    Ok(sum)
+    Ok(sum_step2)
 }
 
 fn parse_line(a_line:&str) -> io::Result<LineContent> {
