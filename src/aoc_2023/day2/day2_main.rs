@@ -1,7 +1,7 @@
 use std::fs::read_to_string;
 use std::io;
 
-const FILE_PATH: &str = "./inputs/aoc_2023/day2/inputs_step1.txt";
+const FILE_PATH: &str = "./inputs/aoc_2023/day2/inputs_step2.txt";
 
 #[derive(Debug)]
 struct LineContent {
@@ -31,9 +31,9 @@ pub fn day2_main() -> io::Result<u32> {
             sum_step1 += line_content.game_id;
         }
 
-        sum_step2 += line_content.cubes.iter().map(|cube| cube.red).max().unwrap() *
+        sum_step2 += (line_content.cubes.iter().map(|cube| cube.red).max().unwrap() *
                            line_content.cubes.iter().map(|cube| cube.green).max().unwrap() *
-                           line_content.cubes.iter().map(|cube| cube.blue).max().unwrap()
+                           line_content.cubes.iter().map(|cube| cube.blue).max().unwrap())
     }
 
     Ok(sum_step2)
