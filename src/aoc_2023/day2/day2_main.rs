@@ -16,7 +16,7 @@ struct Cubes {
     pub blue: u32
 }
 
-pub fn day2_main() -> io::Result<u32> {
+pub fn day2_main() -> io::Result<(u32, u32)> {
     let mut sum_step1 = 0;
     let mut sum_step2 = 0;
     let game_constitution = Cubes{red: 12, green: 13, blue: 14};
@@ -31,12 +31,12 @@ pub fn day2_main() -> io::Result<u32> {
             sum_step1 += line_content.game_id;
         }
 
-        sum_step2 += (line_content.cubes.iter().map(|cube| cube.red).max().unwrap() *
+        sum_step2 += line_content.cubes.iter().map(|cube| cube.red).max().unwrap() *
                            line_content.cubes.iter().map(|cube| cube.green).max().unwrap() *
-                           line_content.cubes.iter().map(|cube| cube.blue).max().unwrap())
+                           line_content.cubes.iter().map(|cube| cube.blue).max().unwrap()
     }
 
-    Ok(sum_step2)
+    Ok((sum_step1, sum_step2))
 }
 
 fn parse_line(a_line:&str) -> io::Result<LineContent> {

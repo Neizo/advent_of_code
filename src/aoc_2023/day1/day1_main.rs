@@ -1,6 +1,7 @@
 use std::fs::read_to_string;
 use std::io;
 
+#[warn(dead_code)]
 const FILE_PATH: &str = "./inputs/aoc_2023/day1/inputs_step2.txt";
 
 pub fn day1_main() -> io::Result<u32>{
