@@ -5,15 +5,15 @@ const FILE_PATH: &str = "./inputs/aoc_2023/day2/inputs_step2.txt";
 
 #[derive(Debug)]
 struct LineContent {
-    pub game_id: u32,
-    pub cubes: Vec<Cubes>
+    game_id: u32,
+    cubes: Vec<Cubes>
 }
 
 #[derive(Debug)]
 struct Cubes {
-    pub red: u32,
-    pub green: u32,
-    pub blue: u32
+    red: u32,
+    green: u32,
+    blue: u32
 }
 
 pub fn day2_main() -> io::Result<(u32, u32)> {
