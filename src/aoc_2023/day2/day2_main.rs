@@ -1,7 +1,7 @@
 use std::fs::read_to_string;
 use std::io;
 
-const FILE_PATH: &str = "./inputs/aoc_2023/day2/inputs_step2.txt";
+const FILE_PATH: &str = "./inputs/aoc_2023/day2/inputs.txt";
 
 #[derive(Debug)]
 struct LineContent {
