@@ -5,7 +5,7 @@ use std::str::Chars;
 
 const FILE_PATH: &str = "./inputs/aoc_2023/day3/inputs.txt";
 
-pub fn main_day3() -> io::Result<(u32, u32)>{
+pub fn day3_main() -> io::Result<(u32, u32)>{
     let file_content = read_to_string(FILE_PATH)?;
     let engine_schematic : Vec<Vec<char>> = file_content.lines().map(|line| line.chars().collect()).collect();
     let mut numbers = vec![];
