@@ -1,7 +1,6 @@
 use std::fs::read_to_string;
 use std::io;
 use std::num::ParseIntError;
-use std::str::Chars;
 
 const FILE_PATH: &str = "./inputs/aoc_2023/day3/inputs.txt";
 
@@ -31,31 +30,43 @@ pub fn day3_main() -> io::Result<(u32, u32)>{
     Ok((numbers.iter().map(|sub_numbers| sub_numbers.iter().sum::<u32>()).sum(), gears.iter().sum()))
 }
 
-fn is_digit(engine_schematic:&Vec<Vec<char>>, index_x:usize, index_y:usize, offset_x:i32, offset_y:i32) -> bool {
+fn is_digit(
+    engine_schematic: &Vec<Vec<char>>,
+    index_x: usize,
+    index_y: usize,
+    offset_x: i32,
+    offset_y: i32,
+) -> bool {
     let index_y_lcl = index_y as i32 + offset_y as i32;
     let index_x_lcl = index_x as i32 + offset_x as i32;
 
     if index_y_lcl < 0 || index_x_lcl < 0 || index_y_lcl >= engine_schematic.len() as i32 || index_x_lcl >= engine_schematic[index_y_lcl as usize].len() as i32 {return false};
 
-    engine_schematic[index_y_lcl as usize][index_x_lcl as usize].to_digit(10).is_some()
+    engine_schematic[index_y_lcl as usize][index_x_lcl as usize]
+        .to_digit(10)
+        .is_some()
 }
 
-fn is_symbol(element:&char) -> bool {
+fn is_symbol(element: &char) -> bool {
     element.is_ascii_punctuation() && element.eq(&'.') == false
 }
 
 fn find_arround(engine_schematic:&Vec<Vec<char>>, index_x: usize, index_y:usize) -> Result<Vec<u32>, ParseIntError> {
     let mut numbers = vec![];
+    #[warn(unused_assignments)]
     let mut finded = false;
 
     for cpt_y in -1i32..=1 {
         finded = false;
         for cpt_x in -1i32..=1 {
             let is_digit = is_digit(&engine_schematic, index_x, index_y, cpt_x, cpt_y);
-            if finded == false && is_digit{
-                numbers.push(read_number(&engine_schematic[(index_y as i32 + cpt_y) as usize], index_x as i32 + cpt_x)?);
+            if finded == false && is_digit {
+                numbers.push(read_number(
+                    &engine_schematic[(index_y as i32 + cpt_y) as usize],
+                    index_x as i32 + cpt_x,
+                )?);
                 finded = true;
-            } else if is_digit == false{
+            } else if is_digit == false {
                 finded = false;
             }
         }
@@ -64,7 +75,7 @@ fn find_arround(engine_schematic:&Vec<Vec<char>>, index_x: usize, index_y:usize)
     Ok(numbers)
 }
 
-fn read_number(line_engine_schematic:&Vec<char>, index_x:i32) -> Result<u32, ParseIntError> {
+fn read_number(line_engine_schematic: &Vec<char>, index_x: i32) -> Result<u32, ParseIntError> {
     let mut read_right = true;
     let mut read_left = true;
     let mut index_x1 = index_x;
@@ -78,5 +89,8 @@ fn read_number(line_engine_schematic:&Vec<char>, index_x:i32) -> Result<u32, Par
         if read_right && line_engine_schematic[index_x2 as usize].to_digit(10).is_some(){ index_x2 +=1 } else { read_right = false}
     }
 
-    line_engine_schematic[(index_x1 as usize)..(index_x2 as usize)].into_iter().collect::<String>().parse::<u32>()
+    line_engine_schematic[(index_x1 as usize)..(index_x2 as usize)]
+        .into_iter()
+        .collect::<String>()
+        .parse::<u32>()
 }
