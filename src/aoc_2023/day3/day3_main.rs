@@ -30,13 +30,7 @@ pub fn day3_main() -> io::Result<(u32, u32)>{
     Ok((numbers.iter().map(|sub_numbers| sub_numbers.iter().sum::<u32>()).sum(), gears.iter().sum()))
 }
 
-fn is_digit(
-    engine_schematic: &Vec<Vec<char>>,
-    index_x: usize,
-    index_y: usize,
-    offset_x: i32,
-    offset_y: i32,
-) -> bool {
+fn is_digit(engine_schematic: &Vec<Vec<char>>, index_x: usize, index_y: usize, offset_x: i32, offset_y: i32) -> bool {
     let index_y_lcl = index_y as i32 + offset_y as i32;
     let index_x_lcl = index_x as i32 + offset_x as i32;
 
