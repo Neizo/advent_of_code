@@ -6,8 +6,11 @@ const FILE_PATH: &str = "./inputs/aoc_2023/day1/inputs.txt";
 
 pub fn day1_main() -> io::Result<(u32, u32)>{
 
-    let sum_e1: u32 = read_to_string(FILE_PATH)?.lines().map(|line| enigme1(line)).sum();
-    let sum_e2: u32 = read_to_string(FILE_PATH)?.lines().map(|line| enigme2(line)).sum();
+    let (sum_e1, sum_e2) = read_to_string(FILE_PATH)?.lines().fold((0, 0), |(sum1, sum2), line| {
+        let e1 = enigme1(line);
+        let e2 = enigme2(line);
+        (sum1 + e1, sum2 + e2)
+    });
 
     Ok((sum_e1, sum_e2))
 }
