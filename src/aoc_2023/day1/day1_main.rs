@@ -1,10 +1,11 @@
 use std::fs::read_to_string;
 use std::io;
+use io::Result;
 
 #[warn(dead_code)]
 const FILE_PATH: &str = "./inputs/aoc_2023/day1/inputs.txt";
 
-pub fn day1_main() -> io::Result<(u32, u32)>{
+pub fn day1_main() -> Result<(u32, u32)>{
 
     let (sum_e1, sum_e2) = read_to_string(FILE_PATH)?.lines().fold((0, 0), |(sum1, sum2), line| {
         let e1 = enigme1(line);

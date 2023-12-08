@@ -10,7 +10,7 @@ fn main() {
 }
 
 /*
-Day 1 : The answer is 54473
+Day 1 : The answer is (54990, 54473)
 Day 2 : The answer is (2505, 70265)
 Day 3 : The answer is (525119, 76504829)
  */

@@ -1,5 +1,6 @@
 use std::fs::read_to_string;
 use std::io;
+use io::Result;
 
 const FILE_PATH: &str = "./inputs/aoc_2023/day2/inputs.txt";
 
@@ -16,7 +17,7 @@ struct Cubes {
     blue: u32
 }
 
-pub fn day2_main() -> io::Result<(u32, u32)> {
+pub fn day2_main() -> Result<(u32, u32)> {
     let mut sum_step1 = 0;
     let mut sum_step2 = 0;
     let game_constitution = Cubes{red: 12, green: 13, blue: 14};
@@ -39,7 +40,7 @@ pub fn day2_main() -> io::Result<(u32, u32)> {
     Ok((sum_step1, sum_step2))
 }
 
-fn parse_line(a_line:&str) -> io::Result<LineContent> {
+fn parse_line(a_line:&str) -> Result<LineContent> {
     let mut cubes = vec![];
     let first_split: Vec<&str> = a_line.split(':').collect();
     let str_game_id = first_split.first().unwrap();
