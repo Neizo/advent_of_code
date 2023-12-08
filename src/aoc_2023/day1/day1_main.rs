@@ -28,16 +28,11 @@ fn get_response(numbers:Vec<u32>) -> u32{
 }
 
 pub fn enigme2(line:&str) -> u32 {
-    let mut line_numbers = vec![];
     let words = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-    let mut indx = 0;
-
-    while indx < line.len() {
-        if let Some(idx_word) = words.iter().position(|&word| line[indx..].starts_with(word)) {
-            line_numbers.push((idx_word % 10) as u32);
-        }
-        indx += 1;
-    }
-
-    get_response(line_numbers)
+    get_response(line.chars()
+        .enumerate()
+        .filter_map(|(indx, _)| words.iter().position(|&word| line[indx..].starts_with(word)))
+        .collect::<Vec<usize>>().iter()
+        .map(|idx| (idx % 10) as u32)
+        .collect::<Vec<u32>>())
 }
