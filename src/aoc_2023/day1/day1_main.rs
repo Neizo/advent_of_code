@@ -24,19 +24,15 @@ fn get_response(numbers:Vec<u32>) -> u32{
     }
 }
 
-pub fn enigme2(_line:&str) -> u32 {
+pub fn enigme2(line:&str) -> u32 {
     let mut line_numbers = vec![];
     let words = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
     let mut indx = 0;
 
-    while indx < _line.len() {
-        for (idx_word, word) in words.iter().enumerate() {
-            if _line[indx..].starts_with(word) {
-                line_numbers.push((&idx_word%10) as u32);
-                break;
-            }
+    while indx < line.len() {
+        if let Some(idx_word) = words.iter().position(|&word| line[indx..].starts_with(word)) {
+            line_numbers.push((idx_word % 10) as u32);
         }
-
         indx += 1;
     }
 
