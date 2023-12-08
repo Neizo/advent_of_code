@@ -57,15 +57,19 @@ fn parse_line(a_line:&str) -> Result<LineContent> {
         let cubes_by_color = cubes_subset.split(',');
 
         for cube in cubes_by_color {
-            let mut cube_split: Vec<&str> = cube.split(' ').collect();
-            cube_split.remove(0);
+            let mut cube_split: Vec<&str> = cube.trim().split_whitespace().collect();
 
-            let number = cube_split.first().unwrap().parse::<u32>().unwrap();
-            let color = cube_split.last().unwrap();
+            let number = cube_split.get(0).unwrap().parse::<u32>().unwrap();
+            let color = *cube_split.last().unwrap();
 
-            if color == &"red" {red = number;}
-            if color == &"green" {green = number;}
-            if color == &"blue" {blue = number;}
+            match color {
+                "red" => red = number,
+                "green" => green = number,
+                "blue" => blue = number,
+                _ => {
+                    // Handle unknown color here.
+                }
+            }
         }
 
         cubes.push(Cubes{red, green, blue});
