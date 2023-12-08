@@ -4,30 +4,27 @@ use std::io;
 #[warn(dead_code)]
 const FILE_PATH: &str = "./inputs/aoc_2023/day1/inputs.txt";
 
-pub fn day1_main() -> io::Result<u32>{
-    let mut sum = 0;
+pub fn day1_main() -> io::Result<(u32, u32)>{
 
-    for line in read_to_string(FILE_PATH)?.lines() {
-        let mut line_value = 0;
-        let mut line_numbers = enigme2(line);
+    let sum_e1: u32 = read_to_string(FILE_PATH)?.lines().map(|line| enigme1(line)).sum();
+    let sum_e2: u32 = read_to_string(FILE_PATH)?.lines().map(|line| enigme2(line)).sum();
 
-        if line_numbers.len() == 1 {line_numbers.push(line_numbers[0]);}
+    Ok((sum_e1, sum_e2))
+}
 
-        if line_numbers.len() >= 2 {
-            line_value = line_numbers.first().unwrap() * 10 + line_numbers.last().unwrap();
-        }
+pub fn enigme1(_line:&str) -> u32{
+    get_response(_line.chars().filter_map(|char| char.to_digit(10)).collect())
+}
 
-        sum += line_value;
+fn get_response(numbers:Vec<u32>) -> u32{
+    match numbers.len() {
+        1 => numbers.first().unwrap() * 11,
+        2..=usize::MAX => numbers.first().unwrap() * 10 + numbers.last().unwrap(),
+        _ => 0,
     }
-
-    Ok(sum)
 }
 
-pub fn enigme1(_line:&str) -> Vec<u32>{
-    _line.chars().filter_map(|char| char.to_digit(10)).collect()
-}
-
-pub fn enigme2(_line:&str) -> Vec<u32> {
+pub fn enigme2(_line:&str) -> u32 {
     let mut line_numbers = vec![];
     let words = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
     let mut indx = 0;
@@ -43,5 +40,5 @@ pub fn enigme2(_line:&str) -> Vec<u32> {
         indx += 1;
     }
 
-    line_numbers
+    get_response(line_numbers)
 }
