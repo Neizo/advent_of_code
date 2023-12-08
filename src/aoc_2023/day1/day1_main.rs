@@ -18,9 +18,9 @@ pub fn enigme1(_line:&str) -> u32{
 
 fn get_response(numbers:Vec<u32>) -> u32{
     match numbers.len() {
+        0 => 0,
         1 => numbers.first().unwrap() * 11,
-        2..=usize::MAX => numbers.first().unwrap() * 10 + numbers.last().unwrap(),
-        _ => 0,
+        _ => numbers.first().unwrap() * 10 + numbers.last().unwrap(),
     }
 }
 
