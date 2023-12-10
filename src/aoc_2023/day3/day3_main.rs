@@ -30,7 +30,7 @@ pub fn day3_main() -> io::Result<(u32, u32)>{
     Ok((numbers.iter().map(|sub_numbers| sub_numbers.iter().sum::<u32>()).sum(), gears.iter().sum()))
 }
 
-fn is_digit(engine_schematic: &Vec<Vec<char>>, index_x: usize, index_y: usize, offset_x: i32, offset_y: i32) -> bool {
+fn is_digit(engine_schematic: &[Vec<char>], index_x: usize, index_y: usize, offset_x: i32, offset_y: i32) -> bool {
     let index_y_lcl = index_y as i32 + offset_y as i32;
     let index_x_lcl = index_x as i32 + offset_x as i32;
 
@@ -42,13 +42,12 @@ fn is_digit(engine_schematic: &Vec<Vec<char>>, index_x: usize, index_y: usize, o
 }
 
 fn is_symbol(element: &char) -> bool {
-    element.is_ascii_punctuation() && element.eq(&'.') == false
+    element.is_ascii_punctuation() && *element != '.'
 }
 
 fn find_arround(engine_schematic:&Vec<Vec<char>>, index_x: usize, index_y:usize) -> Result<Vec<u32>, ParseIntError> {
     let mut numbers = vec![];
-    #[warn(unused_assignments)]
-    let mut finded = false;
+    let mut finded;
 
     for cpt_y in -1i32..=1 {
         finded = false;
@@ -70,10 +69,8 @@ fn find_arround(engine_schematic:&Vec<Vec<char>>, index_x: usize, index_y:usize)
 }
 
 fn read_number(line_engine_schematic: &Vec<char>, index_x: i32) -> Result<u32, ParseIntError> {
-    let mut read_right = true;
-    let mut read_left = true;
-    let mut index_x1 = index_x;
-    let mut index_x2 = index_x;
+    let (mut read_right, mut read_left) = (true, true);
+    let (mut index_x1, mut index_x2) = (index_x, index_x);
 
     while read_right || read_left {
         if index_x1-1 < 0 {read_left = false}
