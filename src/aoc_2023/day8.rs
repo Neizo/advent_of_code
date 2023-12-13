@@ -1,5 +1,6 @@
 use std::io;
 use io::Result;
+use std::collections::HashMap;
 use std::fs::read_to_string;
 use std::str::Lines;
 
@@ -14,28 +15,33 @@ struct Node {
 pub fn day8_main() -> Result<(u64, u64)> {
     let (instructions, network) = parse_file(&read_to_string(FILE_PATH)?.lines());
 
-    let mut node_index = find_node(&network, "AAA");
-    let mut step = 0;
-    loop {
-       for instruction in &instructions {
-           match instruction {
-               'L' => {node_index = find_node(&network, &network[node_index].left_node)},
-               'R' => {node_index = find_node(&network, &network[node_index].right_node)},
-               _ => {}
-           }
-
-           step += 1;
-           if network[node_index].name.eq("ZZZ") {break;}
-       }
-        if network[node_index].name.eq("ZZZ") {break;}
-    }
-
-    Ok((step, 42))
+    Ok((part_1(&instructions, &network), /*part_2(&instructions, &network)*/42))
 }
 
-fn parse_file(lines:&Lines) -> (Vec<char>, Vec<Node>){
+fn part_1(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -> u64 {
+    let mut node = "AAA".to_string();
+
+    let mut step = 0;
+    loop {
+        for instruction in instructions {
+            match instruction {
+                'L' => {node = network[&node].0.to_string()},
+                'R' => {node = network[&node].1.to_string()},
+                _ => {}
+            }
+
+            step += 1;
+            if node == "ZZZ" {break;}
+        }
+        if node == "ZZZ" {break;}
+    }
+
+    step
+}
+
+fn parse_file(lines:&Lines) -> (Vec<char>, HashMap<String, (String, String)>){
     let mut instructions = vec![];
-    let mut network = vec![];
+    let mut network = HashMap::new();
 
     for (indx, line) in lines.clone().enumerate() {
         match indx {
@@ -43,7 +49,7 @@ fn parse_file(lines:&Lines) -> (Vec<char>, Vec<Node>){
             _ => {
                 if line.eq("") {continue;}
                 let (node_name, next_element) = parse_line(line);
-                network.push(Node{name: node_name, left_node: next_element[0].clone(), right_node: next_element[1].clone()});
+                network.insert(node_name, (next_element[0].clone(), next_element[1].clone()));
             }
         }
     }
@@ -58,16 +64,4 @@ fn parse_line(line:&str) -> (String, Vec<String>) {
     let next_elements = next_elements_tmp.split(',').map(|element| element.to_string()).collect();
 
     (node_name.to_string(), next_elements)
-}
-
-fn find_node(network:&Vec<Node>, node_name:&str) -> usize {
-    let mut node_index = 0;
-    for (index, node) in network.iter().enumerate() {
-        if node.name.eq(node_name) {
-            node_index = index;
-            break;
-        }
-    }
-
-    node_index
 }
