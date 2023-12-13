@@ -3,6 +3,7 @@ use io::Result;
 use std::collections::HashMap;
 use std::fs::read_to_string;
 use std::str::Lines;
+use num::*;
 
 const FILE_PATH: &str = "./inputs/aoc_2023/day8/inputs.txt";
 
@@ -15,7 +16,7 @@ struct Node {
 pub fn day8_main() -> Result<(u64, u64)> {
     let (instructions, network) = parse_file(&read_to_string(FILE_PATH)?.lines());
 
-    Ok((part_1(&instructions, &network), /*part_2(&instructions, &network)*/42))
+    Ok((part_1(&instructions, &network), part_2(&instructions, &network)))
 }
 
 fn part_1(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -> u64 {
@@ -37,6 +38,32 @@ fn part_1(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -
     }
 
     step
+}
+
+fn part_2(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -> u64 {
+    let mut nodes: Vec<String> = network.keys().filter(|&node_name| node_name.ends_with('A')).cloned().collect();
+    let mut counts = vec![];
+    println!("{:?}", nodes);
+
+    for mut node in nodes {
+        let mut step = 0i64;
+        loop {
+            for instruction in instructions {
+                match instruction {
+                    'L' => {node = network[&node].0.to_string()},
+                    'R' => {node = network[&node].1.to_string()},
+                    _ => {}
+                }
+
+                step += 1;
+                if node.ends_with('Z') {break;}
+            }
+            if node.ends_with('Z') {break;}
+        }
+        counts.push(step);
+    }
+
+    counts.into_iter().reduce(|a, b| a.lcm(&b)).unwrap() as u64
 }
 
 fn parse_file(lines:&Lines) -> (Vec<char>, HashMap<String, (String, String)>){
