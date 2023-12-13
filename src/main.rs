@@ -13,5 +13,5 @@ fn main() {
     println!("Day 3 : The answer is {:?}", day3_main().unwrap());
     println!("Day 4 : The answer is {:?}", day4_main().unwrap());
     println!("Day 5 : The answer is {:?}", day5_main().unwrap());
-    println!("Day 5 : The answer is {:?}", day6_main().unwrap());
+    println!("Day 6 : The answer is {:?}", day6_main().unwrap());
 }
