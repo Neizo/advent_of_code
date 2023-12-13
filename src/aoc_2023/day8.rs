@@ -43,7 +43,6 @@ fn part_1(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -
 fn part_2(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -> u64 {
     let mut nodes: Vec<String> = network.keys().filter(|&node_name| node_name.ends_with('A')).cloned().collect();
     let mut counts = vec![];
-    println!("{:?}", nodes);
 
     for mut node in nodes {
         let mut step = 0i64;
