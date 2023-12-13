@@ -7,12 +7,6 @@ use num::*;
 
 const FILE_PATH: &str = "./inputs/aoc_2023/day8/inputs.txt";
 
-#[derive(Debug)]
-struct Node {
-    name: String,
-    left_node:String,
-    right_node:String,
-}
 pub fn day8_main() -> Result<(u64, u64)> {
     let (instructions, network) = parse_file(&read_to_string(FILE_PATH)?.lines());
 
@@ -41,7 +35,7 @@ fn part_1(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -
 }
 
 fn part_2(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -> u64 {
-    let mut nodes: Vec<String> = network.keys().filter(|&node_name| node_name.ends_with('A')).cloned().collect();
+    let nodes: Vec<String> = network.keys().filter(|&node_name| node_name.ends_with('A')).cloned().collect();
     let mut counts = vec![];
 
     for mut node in nodes {
