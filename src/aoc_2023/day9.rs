@@ -24,7 +24,7 @@ fn extract_diff(numbers:&Vec<i64>) -> i64{
     diffs.push(numbers[0]);
     diffs = (1..numbers.len()).map(|indx| numbers[indx] - numbers[indx-1]).collect::<Vec<i64>>();
 
-    if diffs.iter().any(|&diff| diff != 0) == true {
+    if diffs.iter().any(|&diff| diff != 0) {
         return diffs.last().unwrap() + extract_diff(&diffs);
     }
 
