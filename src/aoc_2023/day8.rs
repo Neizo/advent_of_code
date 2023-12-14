@@ -40,7 +40,7 @@ fn part_2(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -
 
     for mut node in nodes {
         let mut step = 0i64;
-        loop {
+        while node.ends_with('Z') == false {
             for instruction in instructions {
                 match instruction {
                     'L' => {node = network[&node].0.to_string()},
@@ -51,8 +51,8 @@ fn part_2(instructions:&Vec<char>, network:&HashMap<String, (String, String)>) -
                 step += 1;
                 if node.ends_with('Z') {break;}
             }
-            if node.ends_with('Z') {break;}
         }
+
         counts.push(step);
     }
 
