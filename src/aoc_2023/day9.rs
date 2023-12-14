@@ -19,16 +19,13 @@ fn part_1(numbers:&Vec<Vec<i64>>) -> i64{
 }
 
 fn extract_diff(numbers:&Vec<i64>) -> i64{
-    let mut diffs = vec![];
-
-    diffs.push(numbers[0]);
-    diffs = (1..numbers.len()).map(|indx| numbers[indx] - numbers[indx-1]).collect::<Vec<i64>>();
+    let diffs = (1..numbers.len()).map(|indx| numbers[indx] - numbers[indx-1]).collect::<Vec<i64>>();
 
     if diffs.iter().any(|&diff| diff != 0) {
         return diffs.last().unwrap() + extract_diff(&diffs);
     }
 
-    return 0i64
+    0i64
 }
 
 fn part_2(numbers:&Vec<Vec<i64>>) -> i64 {
