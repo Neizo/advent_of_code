@@ -1,8 +1,6 @@
 use std::fs::read_to_string;
 use std::io;
 use io::Result;
-use std::cmp::{max, min};
-use num::Signed;
 
 const FILE_PATH: &str = "./inputs/aoc_2023/day9/inputs.txt";
 
