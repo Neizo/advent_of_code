@@ -1,29 +1,40 @@
-use std::time::Instant;
-use crate::aoc_2023::day1::day1_main;
-use crate::aoc_2023::day2::day2_main;
-use crate::aoc_2023::day3::day3_main;
-use crate::aoc_2023::day4::day4_main;
-use crate::aoc_2023::day5::day5_main;
-use crate::aoc_2023::day6::day6_main;
-use crate::aoc_2023::day7::day7_main;
-use crate::aoc_2023::day8::day8_main;
-use crate::aoc_2023::day9::day9_main;
+use std::env;
+use crate::aoc_2023::resous_annee_2023;
 
 mod aoc_2023;
 
 fn main() {
-    let start = Instant::now();
+    let year = get_year();
 
-    println!("Day 1 : The answer is {:?}", day1_main().unwrap());
-    println!("Day 2 : The answer is {:?}", day2_main().unwrap());
-    println!("Day 3 : The answer is {:?}", day3_main().unwrap());
-    println!("Day 4 : The answer is {:?}", day4_main().unwrap());
-    println!("Day 5 : The answer is {:?}", day5_main().unwrap());
-    println!("Day 6 : The answer is {:?}", day6_main().unwrap());
-    println!("Day 7 : The answer is {:?}", day7_main().unwrap());
-    println!("Day 8 : The answer is {:?}", day8_main().unwrap());
-    println!("Day 9 : The answer is {:?}", day9_main().unwrap());
+    match year {
+        None => {}
+        Some(year) => {
+            match year.as_str() {
+                "2023" => {resous_annee_2023()}
+                &_ => {
+                    println!("year {:?} not handle", year)
+                }
+            }
+        }
+    }
+}
 
-    let elapsed = start.elapsed();
-    println!("{:.2?}", elapsed);
+fn get_year() -> Option<String>{
+    let args: Vec<String> = env::args().collect();
+
+    for cpt_arg in 0..args.len() {
+        match args[cpt_arg].as_str() {
+            "year" => {
+                if args.len()-1 < cpt_arg + 1 {
+                    println!("Years not specified");
+                    return None;
+                }
+
+                return Some(args[cpt_arg+1].clone());
+            },
+            _ => {}
+        }
+    }
+
+    None
 }
