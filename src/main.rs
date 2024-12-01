@@ -2,6 +2,7 @@ use std::env;
 use crate::aoc_2023::resous_annee_2023;
 
 mod aoc_2023;
+mod aoc_2024;
 
 fn main() {
     let year = get_year();
