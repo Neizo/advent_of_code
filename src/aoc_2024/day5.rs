@@ -1,6 +1,8 @@
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::error::Error;
 
+/*Algo utilisé : Topologie sorting*/
+
 const FILE_PATH: &str = "./inputs/aoc_2024/inputs_day5.txt";
 
 pub fn get_response() -> Result<(i64, i64), Box<dyn Error>> {
