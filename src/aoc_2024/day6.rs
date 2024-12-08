@@ -12,13 +12,13 @@ const DIRECTIONS: [(i32, i32); 4] = [
     (-1, 0), // Gauche (<)
 ];
 
-pub fn get_response() -> Result<(i64, i64), Box<dyn Error>> {
+pub fn get_response() -> Result<(usize, i64), Box<dyn Error>> {
     let input = read_to_string(&FILE_PATH).expect("Unable to read file");
 
-    Ok((simulate_guard_path(input.as_str()), enigme2(input.as_str())))
+    Ok((simulate_guard_path(input.as_str()).len(), enigme2(input.as_str())))
 }
 
-fn simulate_guard_path(map: &str) -> i64 {
+fn simulate_guard_path(map: &str) -> HashSet<(i32, i32)> {
     // Charger la carte dans une grille
     let grid: Vec<Vec<char>> = map
         .lines()
@@ -80,7 +80,7 @@ fn simulate_guard_path(map: &str) -> i64 {
         }
     }
 
-    visited_positions.len() as i64
+    visited_positions
 }
 
 fn enigme2(map: &str) -> i64 {
@@ -92,6 +92,7 @@ fn enigme2(map: &str) -> i64 {
     // Identifier la position initiale et la direction du garde
     let mut guard_position = (0, 0);
     let mut guard_direction = 0;
+    let guard_path = simulate_guard_path(map);
 
     for (y, row) in grid.iter().enumerate() {
         for (x, &cell) in row.iter().enumerate() {
@@ -113,20 +114,18 @@ fn enigme2(map: &str) -> i64 {
     let mut possible_positions = 0;
 
     // Tester chaque position vide pour une obstruction
-    for y in 0..grid.len() {
-        for x in 0..grid[0].len() {
-            if grid[y][x] == '.' && (x as i32, y as i32) != guard_position {
-                // Placer une obstruction temporaire
-                grid[y][x] = '#';
+    for (x, y) in guard_path {
+        if grid[y as usize][x as usize] == '.' && (x as i32, y as i32) != guard_position {
+            // Placer une obstruction temporaire
+            grid[y as usize][x as usize] = '#';
 
-                // Vérifier si cela crée un cycle
-                if creates_cycle(&grid, guard_position, guard_direction) {
-                    possible_positions += 1;
-                }
-
-                // Retirer l'obstruction temporaire
-                grid[y][x] = '.';
+            // Vérifier si cela crée un cycle
+            if creates_cycle(&grid, guard_position, guard_direction) {
+                possible_positions += 1;
             }
+
+            // Retirer l'obstruction temporaire
+            grid[y as usize][x as usize] = '.';
         }
     }
 
