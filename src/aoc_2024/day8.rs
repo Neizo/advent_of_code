@@ -41,9 +41,9 @@ fn count_antinodes(
 ) -> usize {
     let mut antinode_positions = HashSet::new();
 
-    for (&frequency, positions) in map {
+    for (_, positions) in map {
         // Parcourt toutes les paires d'antennes de la même fréquence
-        for (i, &(y1, x1)) in positions.iter().enumerate() {
+        for (_, &(y1, x1)) in positions.iter().enumerate() {
             for &(y2, x2) in positions.iter() {
                 if x1 == x2 && y1 == y2 {continue}
                 // Calcul de la distance et vérification des antinodes
