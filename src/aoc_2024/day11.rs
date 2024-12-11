@@ -2,6 +2,10 @@ use std::collections::{HashMap, VecDeque};
 use std::error::Error;
 use std::fs::read_to_string;
 
+/*
+* Utilisation d'une HashMap, a la fin au lieux d'avoir des millions de pierre dans un vecteur on en a quelque millier, ce qui rend les boucles vachement plus rapide
+ */
+
 const FILE_PATH: &str = "./inputs/aoc_2024/inputs_day11.txt";
 
 pub fn get_response() -> Result<(usize, usize), Box<dyn Error>> {
