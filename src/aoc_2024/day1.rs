@@ -2,8 +2,6 @@ use std::collections::HashMap;
 use std::error::Error;
 use std::fs::read_to_string;
 
-const FILE_PATH: &str = "./inputs/aoc_2024/inputs_day1.txt";
-
 pub fn get_response() -> Result<(i64, i64), Box<dyn Error>> {
     match parse_file() {
         Ok((mut left_numbers, mut right_numbers)) => {
@@ -17,6 +15,7 @@ pub fn get_response() -> Result<(i64, i64), Box<dyn Error>> {
 }
 
 fn parse_file() -> Result<(Vec<i64>, Vec<i64>), Box<dyn Error>> {
+    const FILE_PATH: &str = "./inputs/aoc_2024/inputs_day1.txt";
     let (mut left_numbers, mut right_numbers) = (Vec::new(), Vec::new());
 
     read_to_string(FILE_PATH)?

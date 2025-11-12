@@ -1,8 +1,9 @@
 use std::error::Error;
 use std::fs;
-
+#[allow(dead_code)]
 const FILE_PATH: &str = "./inputs/aoc_2024/inputs_day4.txt";
 
+#[allow(dead_code)]
 fn parse_file() -> Vec<Vec<char>> {
     let input = fs::read_to_string(FILE_PATH).expect("Unable to read file");
 

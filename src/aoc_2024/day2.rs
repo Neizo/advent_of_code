@@ -4,11 +4,6 @@ use std::fs::read_to_string;
 
 const FILE_PATH: &str = "./inputs/aoc_2024/inputs_day2.txt";
 
-#[derive(PartialEq, Eq)]
-enum Levels {
-    INCREASING,
-    DECREASING
-}
 
 fn parse_file() -> Result<Vec<Vec<i64>>, Box<dyn Error>> {
     let datas = read_to_string(FILE_PATH)?;
@@ -54,6 +49,12 @@ fn enigme1(reports: &Vec<Vec<i64>>) -> i64 {
 
 fn is_safe_line(line: &Vec<i64>) -> Option<usize> {
     let size_line = line.len();
+
+    #[derive(PartialEq, Eq)]
+    enum Levels {
+        INCREASING,
+        DECREASING
+    }
 
     // Déterminer si la ligne est sûre
     let mut levels = Levels::INCREASING;

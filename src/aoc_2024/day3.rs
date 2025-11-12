@@ -33,7 +33,7 @@ fn find_mul(files:&str) -> Vec<(i64, i64)> {
 }
 
 fn enigme1(numbers:&Vec<(i64, i64)>) -> i64 {
-    numbers.iter().map(|(value1, value2)| (value1*value2)).sum()
+    numbers.iter().map(|(value1, value2)| value1*value2).sum()
 }
 
 fn part2(files:&String) -> i64 {
