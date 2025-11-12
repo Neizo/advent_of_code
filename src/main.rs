@@ -4,6 +4,7 @@ use crate::aoc_2024::resout_aoc_2024;
 
 mod aoc_2023;
 mod aoc_2024;
+mod utils;
 
 fn main() {
     let year = get_year();

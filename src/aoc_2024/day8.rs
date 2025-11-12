@@ -1,23 +1,18 @@
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
-use std::fs;
+use crate::utils::utils_files::parse_file;
 
 const FILE_PATH: &str = "./inputs/aoc_2024/inputs_day8.txt";
 
-pub fn get_response() -> Result<(i64, i64), Box<dyn Error>> {
-    let input = fs::read_to_string(FILE_PATH).expect("Unable to read file");
+pub fn get_response() -> Result<(usize, usize), Box<dyn Error>> {
+    let input = parse_file(FILE_PATH.to_string());
     let inputs = input.lines().map(|line| line).collect::<Vec<&str>>();
 
-    for input in &inputs {
-        println!("{:?}", input);
-    }
     let map = parse_map(&inputs);
-    println!("{:?}", map);
 
     let antinode_count = count_antinodes(&map, inputs.len(), inputs[0].len());
-    println!("Total unique antinode positions: {}", antinode_count);
 
-    Ok((0, 0))
+    Ok((antinode_count, antinode_count))
 }
 
 // Parse la carte pour extraire les positions des antennes
@@ -51,9 +46,7 @@ fn count_antinodes(
             }
         }
     }
-
-    println!("{:?}", antinode_positions);
-
+    
     antinode_positions.len()
 }
 
