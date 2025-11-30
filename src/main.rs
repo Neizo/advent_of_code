@@ -1,10 +1,12 @@
 use std::env;
 use crate::aoc_2023::resous_annee_2023;
 use crate::aoc_2024::resout_aoc_2024;
+use crate::aoc_2025::resout_aoc_2025;
 
 mod aoc_2023;
 mod aoc_2024;
 mod utils;
+mod aoc_2025;
 
 fn main() {
     let year = get_year();
@@ -15,6 +17,7 @@ fn main() {
             match year.as_str() {
                 "2023" => {resous_annee_2023()}
                 "2024" => {resout_aoc_2024()}
+                "2025" => {resout_aoc_2025()}
                 &_ => {
                     println!("year {:?} not handle", year)
                 }
