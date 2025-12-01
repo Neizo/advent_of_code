@@ -1,3 +1,5 @@
+extern crate core;
+
 use std::env;
 use crate::aoc_2023::resous_annee_2023;
 use crate::aoc_2024::resout_aoc_2024;

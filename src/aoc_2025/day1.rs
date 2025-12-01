@@ -1,4 +1,4 @@
-const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day1/inputs_test.txt";
+//const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day1/inputs_test.txt";
 const FILE_PATH_E1: &str = "./inputs/aoc_2025/day1/inputs_e1.txt";
 fn parse_input(_file_path:&str) -> Vec<(char, i64)> {
     let content = std::fs::read_to_string(_file_path)
@@ -30,17 +30,8 @@ pub fn enigme1() -> i64 {
     let mut compteur = 0i64;
 
     for (direction, nb_move) in moves {
-        match direction {
-            'L' => {
-                dial -= nb_move % 100;
-            },
-            'R' => {
-                dial += nb_move % 100;
-            },
-            _ => println!("{} non géré", direction),
-        }
-
-        dial = dial.rem_euclid(100);
+        let step_direction = if direction == 'L' { -1 } else { 1 };
+        dial = (dial + step_direction * nb_move).rem_euclid(100);
         if dial == 0 {compteur += 1}
     }
 
