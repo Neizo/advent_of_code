@@ -19,19 +19,20 @@ pub fn get_response() -> (usize, usize) {
     (enigme1_result, enigme2_result)
 }
 
-fn trouve_rouleau_isoler(grid:&mut Vec<Vec<char>>) -> Vec<(usize, usize)> {
+fn trouve_rouleau_isoler(grid:&mut Vec<Vec<char>>, replace:bool) -> Vec<(usize, usize)> {
     let mut isolated = Vec::new();
     let directions: [(i8, i8); 8] = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)];
+    let initial_grid = grid.clone();
 
-    for i in 0..grid.len() {
-        for j in 0..grid[i].len() {
-            if grid[i][j] != '@' {continue}
+    for i in 0..initial_grid.len() {
+        for j in 0..initial_grid[i].len() {
+            if initial_grid[i][j] != '@' {continue}
             let mut neighbor_count = 0;
             for (x, y) in directions {
                 let (ni, nj) = (i as i32 + x as i32, j as i32 + y as i32);
                 if ni < 0 || nj < 0 {continue;}
-                if ni >= grid.len() as i32 || nj >= grid[i].len() as i32 {continue;}
-                if grid[ni as usize][nj as usize] == '@' {
+                if ni >= initial_grid.len() as i32 || nj >= initial_grid[i].len() as i32 {continue;}
+                if initial_grid[ni as usize][nj as usize] == '@' {
                     neighbor_count += 1;
                     if neighbor_count >= 4 {break;}
                 }
@@ -44,22 +45,19 @@ fn trouve_rouleau_isoler(grid:&mut Vec<Vec<char>>) -> Vec<(usize, usize)> {
         }
     }
 
+    if isolated.len() > 0 && replace == true {
+        isolated.append(&mut trouve_rouleau_isoler(&mut grid.clone(), replace));
+    }
+
     isolated
 }
 
 pub fn enigme1() -> usize {
     let mut grid = parse_input(FILE_PATH_E1);
-    trouve_rouleau_isoler(&mut grid).len()
+    trouve_rouleau_isoler(&mut grid, false).len()
 }
 
 pub fn enigme2() -> usize {
     let mut grid = parse_input(FILE_PATH_E1);
-    let mut nb_rouleau = 0;
-    loop {
-        let isolated = trouve_rouleau_isoler(&mut grid);
-        nb_rouleau += isolated.len();
-        if isolated.len() <= 0 {break;}
-    }
-
-    nb_rouleau
+    trouve_rouleau_isoler(&mut grid, true).len()
 }
