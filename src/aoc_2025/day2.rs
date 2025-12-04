@@ -1,4 +1,4 @@
-const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day2/inputs_test.txt";
+//const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day2/inputs_test.txt";
 const FILE_PATH_E1: &str = "./inputs/aoc_2025/day2/inputs_e1.txt";
 
 fn parse_input(_file_path: &str) -> Vec<(usize, usize)> {

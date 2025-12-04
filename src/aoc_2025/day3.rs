@@ -1,5 +1,5 @@
 const FILE_PATH_E1: &str = "./inputs/aoc_2025/day3/inputs_e1.txt";
-const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day3/inputs_test.txt";
+//const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day3/inputs_test.txt";
 fn parse_input(_file_path: &str) -> Vec<Vec<u64>> {
     let content = std::fs::read_to_string(_file_path)
         .expect("Failed to read file");
