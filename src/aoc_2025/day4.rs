@@ -19,7 +19,7 @@ pub fn get_response() -> (usize, usize) {
     (enigme1_result, enigme2_result)
 }
 
-fn trouve_rouleau_isoler(grid:&mut Vec<Vec<char>>, replace:bool) -> Vec<(usize, usize)> {
+fn trouve_rouleau_isoler(grid: &mut Vec<Vec<char>>, replace:bool) -> Vec<(usize, usize)> {
     let mut isolated = Vec::new();
     let directions: [(i8, i8); 8] = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)];
     let initial_grid = grid.clone();
@@ -46,7 +46,7 @@ fn trouve_rouleau_isoler(grid:&mut Vec<Vec<char>>, replace:bool) -> Vec<(usize, 
     }
 
     if isolated.len() > 0 && replace == true {
-        isolated.append(&mut trouve_rouleau_isoler(&mut grid.clone(), replace));
+        isolated.append(&mut trouve_rouleau_isoler(grid, replace));
     }
 
     isolated
