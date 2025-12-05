@@ -1,3 +1,5 @@
+use crate::utils::utils_files::{afficher_resultats, mesurer};
+
 //const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day1/inputs_test.txt";
 const FILE_PATH_E1: &str = "./inputs/aoc_2025/day1/inputs_e1.txt";
 fn parse_input(_file_path:&str) -> Vec<(char, i64)> {
@@ -18,10 +20,11 @@ fn parse_input(_file_path:&str) -> Vec<(char, i64)> {
         .collect()
 }
 
-pub fn get_response() -> (i64, i32) {
-    let enigme1_result = enigme1();
-    let enigme2_result = enigme2();
-    (enigme1_result, enigme2_result)
+pub fn get_response() {
+    let (enigme1_result, time_e1) = mesurer(enigme1);
+    let (enigme2_result, time_e2) = mesurer(enigme2);
+
+    afficher_resultats(1, enigme1_result, time_e1, enigme2_result,time_e2);
 }
 
 pub fn enigme1() -> i64 {

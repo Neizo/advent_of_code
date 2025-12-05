@@ -1,3 +1,5 @@
+use crate::utils::utils_files::{afficher_resultats, mesurer};
+
 //const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day4/inputs_test.txt";
 const FILE_PATH_E1: &str = "./inputs/aoc_2025/day4/inputs_e1.txt";
 
@@ -13,10 +15,11 @@ fn parse_input(_file_path: &str) -> Vec<Vec<char>> {
         .collect()
 }
 
-pub fn get_response() -> (usize, usize) {
-    let enigme1_result = enigme1();
-    let enigme2_result = enigme2();
-    (enigme1_result, enigme2_result)
+pub fn get_response() {
+    let (enigme1_result, time_e1) = mesurer(enigme1);
+    let (enigme2_result, time_e2) = mesurer(enigme2);
+
+    afficher_resultats(4, enigme1_result, time_e1, enigme2_result,time_e2);
 }
 
 fn trouve_rouleau_isoler(grid: &mut Vec<Vec<char>>, replace:bool) -> Vec<(usize, usize)> {
