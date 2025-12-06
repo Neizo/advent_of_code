@@ -13,6 +13,7 @@ mod aoc_2025;
 fn main() {
     let year = get_year();
 
+    /*run --year 2025*/
     match year {
         None => {}
         Some(year) => {
