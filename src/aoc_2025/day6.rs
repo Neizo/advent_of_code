@@ -66,43 +66,86 @@ pub fn enigme1() -> usize {
 
     result
 }
-pub fn decompose(numbers: &Vec<usize>) -> Vec<usize> {
-    let mut result = Vec::new();
-    let mut remaining: Vec<usize> = numbers.clone();
 
-    while !remaining.is_empty() {
-        // Extraire les chiffres les plus à droite
-        let concatenated = remaining
-            .iter()
-            .map(|&n| (n % 10).to_string())
-            .collect::<String>()
-            .parse::<usize>()
-            .unwrap();
+fn extract_columns(_file_path: &str) -> Vec<(usize,Vec<String>)> {
+    let content = std::fs::read_to_string(_file_path)
+        .expect("Failed to read file");
+    let lines: Vec<&str> = content.lines().by_ref().take_while(|line| !line.trim().is_empty()).collect();
+    if lines.is_empty() {
+        return Vec::new();
+    }
 
-        result.push(concatenated);
+    let mut columns: Vec<(usize,Vec<String>)> = Vec::new();
+    let mut positions = 0;
 
-        // Retirer le chiffre le plus à droite de chaque nombre
-        remaining = remaining
-            .iter()
-            .map(|&n| n / 10)
-            .filter(|&n| n > 0)
-            .collect();
+    loop {
+        let mut column_data: Vec<String> = Vec::new();
+        let mut column_length = vec![0; lines.len()];
+        if positions >= lines[0].len() {break;}
+
+        for (i, line) in lines.iter().enumerate() {
+            let mut length = 0;
+            for char in line[positions..].chars() {
+               if char.is_whitespace() {break}
+                length += 1;
+           }
+            column_length[i] = length;
+        }
+
+        let max_len = *column_length.iter().max().unwrap() as usize;
+
+        for line in lines.iter() {
+            let mut data: String = "".to_string();
+            if positions + max_len > line.len() {
+                let max_len_lcl = line.len() - positions;
+                data.push_str(&" ".repeat(positions + max_len_lcl - (line.len() - 1)));
+                let data = line[positions..positions + max_len_lcl].to_string() + data.as_str();
+                column_data.push(data);
+            } else {
+                column_data.push(line[positions..positions + max_len].to_string());
+            }
+
+        }
+
+        positions += max_len+1;
+        columns.push((max_len, column_data));
+    }
+
+    columns
+}
+
+fn create_number_from_column(numbers_str: Vec<(usize,Vec<String>)>) -> Vec<Vec<usize>> {
+    let mut final_numbers: Vec<Vec<usize>> = Vec::new();
+
+    for (max_len, numbers) in numbers_str.iter() {
+        let mut new_number:Vec<String> = vec!["".to_string(); *max_len];
+        for number in numbers.iter() {
+            for pos in 0..*max_len {
+                if number.chars().nth(pos).unwrap().is_whitespace() {continue}
+                new_number[pos].push_str(number.chars().nth(pos).unwrap().to_string().as_str());
+            }
+        }
+
+        final_numbers.push(new_number.iter().map(|number_str| number_str.to_string().parse::<usize>().unwrap()).collect::<Vec<usize>>());
+    }
+
+    final_numbers
+}
+pub fn enigme2() -> usize {
+    let (_, operators) = parse_input(FILE_PATH_E1);
+    let numbers_str = extract_columns(FILE_PATH_E1);
+    let numbers = create_number_from_column(numbers_str);
+    let mut result = 0;
+
+    for (idx, operator) in operators.iter().enumerate() {
+        result += match operator {
+            '*' => numbers[idx].iter().product::<usize>(),
+            '+' => numbers[idx].iter().sum::<usize>(),
+            _ => {println!("Operateur {} non géré", operator);
+                0
+            }
+        };
     }
 
     result
-}
-
-pub fn enigme2() -> usize {
-    let (numbers, operators) = parse_input(FILE_PATH_TEST);
-    let numbers = transposition_matrice(numbers);
-    println!("{:?}", numbers);
-
-    for (idx, operator) in operators.iter().enumerate() {
-        let decomposer = decompose(&numbers[idx]);
-        println!("{:?}", numbers[idx]);
-        println!("{:?}", decomposer);
-        println!();
-    }
-    // TODO: Implement solution for part 2
-    0
 }
