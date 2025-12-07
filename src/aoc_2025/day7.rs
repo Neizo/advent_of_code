@@ -72,14 +72,14 @@ pub fn enigme1() -> usize {
 
     result
 }
-pub fn parcourt_inverser(grid: Vec<Vec<u8>>) -> usize {
-    let start = grid[0].iter().position(|&b| b == b'S').unwrap();
+pub fn parcourt_inverser(grid: Vec<Vec<char>>) -> usize {
+    let start = grid[0].iter().position(|&b| b == 'S').unwrap();
     let mut path_counts = vec![vec![0; grid[0].len()]; grid.len()];
 
     *path_counts.last_mut().unwrap() = vec![1; grid[0].len()];
     for i in (0..grid.len() - 1).rev() {
         for ii in 0..grid[i].len() {
-            path_counts[i][ii] = if grid[i][ii] == b'^' {
+            path_counts[i][ii] = if grid[i][ii] == '^' {
                 let left = path_counts[i + 1][ii - 1];
                 let right = path_counts[i + 1][ii + 1];
                 left + right
@@ -98,7 +98,7 @@ pub fn enigme2() -> usize {
 
     let grid = content
         .lines()
-        .map(|l| l.bytes().collect_vec())
+        .map(|l| l.chars().collect_vec())
         .collect_vec();
 
 
