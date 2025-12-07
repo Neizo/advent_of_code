@@ -1,6 +1,6 @@
 use crate::utils::utils_files::{afficher_resultats, mesurer};
 
-const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day6/inputs_test.txt";
+//const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day6/inputs_test.txt";
 const FILE_PATH_E1: &str = "./inputs/aoc_2025/day6/inputs_e1.txt";
 
 fn parse_input(_file_path: &str) -> (Vec<Vec<usize>>, Vec<char>){
