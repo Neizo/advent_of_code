@@ -1,5 +1,4 @@
 use std::collections::{HashSet};
-use itertools::Itertools;
 use crate::utils::utils_files::{afficher_resultats, mesurer};
 
 //const FILE_PATH_TEST: &str = "./inputs/aoc_2025/day7/inputs_test.txt";
@@ -93,14 +92,6 @@ pub fn parcourt_inverser(grid: Vec<Vec<char>>) -> usize {
 }
 
 pub fn enigme2() -> usize {
-    let content = std::fs::read_to_string(FILE_PATH_E1)
-        .expect("Failed to read file");
-
-    let grid = content
-        .lines()
-        .map(|l| l.chars().collect_vec())
-        .collect_vec();
-
-
-    parcourt_inverser(grid)
+    let content = parse_input(FILE_PATH_E1);
+    parcourt_inverser(content)
 }
