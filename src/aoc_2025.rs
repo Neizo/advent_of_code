@@ -8,6 +8,7 @@ mod day7;
 mod day8;
 mod day9;
 mod day10;
+mod day11;
 
 pub fn resout_aoc_2025() {
     day1::get_response();
@@ -20,4 +21,5 @@ pub fn resout_aoc_2025() {
     day8::get_response();
     day9::get_response();
     day10::get_response();
+    day11::get_response();
 }
